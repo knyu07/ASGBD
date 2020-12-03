@@ -63,3 +63,43 @@ docker run -d --name mysql-latest -e MYSQL_ROOT_PASSWORD=root -v /home/pili/.con
 - **-p** : Comando que sirve para enlazar los puertos del contenedor con los de la maquina real
 
 - Y por ultimo donde pone mysql es la imagen que se utilizara para la creacion del contenedor.
+
+Una vez iniciada mysql comprobamos que está funcionando
+
+```
+docker stats
+```
+![](Imagenes/stats.png);
+
+## INSTALACIÓN MYSQL WORKBENCH
+
+En mi caso para la instalación al ser un OpenSuse hay que descargarse un archivo .ymp que te lo instala con Yast. 
+
+```
+<metapackage xmlns:os="http://opensuse.org/Standards/One_Click_Install" xmlns="http://opensuse.org/Standards/One_Click_Install">
+  <group distversion="openSUSE Leap 15.2">
+    <repositories>
+      <repository recommended="true">
+        <name>openSUSE:Leap:15.2</name>
+        <summary>openSUSE Leap 15.2</summary>
+        <description>openSUSE Leap borrows packages from SLE for the base system. Please refer to https://osrt.opensuse.org/web/origin-manager/#openSUSE:Leap:15.2 for origin information</description>
+        <url>http://download.opensuse.org/distribution/leap/15.2/repo/oss/</url>
+      </repository>
+    </repositories>
+    <software>
+      <item>
+        <name>mysql-workbench</name>
+        <summary>A MySQL visual database modeling, administration and querying tool</summary>
+        <description>MySQL Workbench is a modeling tool that allows you to design
+and generate MySQL databases graphically. It also has administration
+and query development modules where you can manage MySQL server instances
+and execute SQL queries.
+This is the community build.</description>
+      </item>
+    </software>
+  </group>
+</metapackage>
+
+```
+- Archivo usado para instalar MySQL Workbench
+
