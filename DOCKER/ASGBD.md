@@ -21,7 +21,7 @@ Reiniciamos el docker
 ```
 systemctl restart docker
 ```
-PARA LA COMPROBACIÓN:
+### Para la comprobación:
 
 Nos instalamos una imagen de ejemplo: 
 ```
@@ -52,14 +52,14 @@ Creamos el contenedor de mysql:
 docker run -d --name mysql-latest -e MYSQL_ROOT_PASSWORD=root -v /home/pili/.conf:/var/lib/mysql -p 3306:3306 mysql
 ```
 
-- -d : Para lanzarlo de segundo plano
+- **-d** : Para lanzarlo de segundo plano
 
-- -- name : Asignamos un nombre al contenedor
+- **--name** : Asignamos un nombre al contenedor
 
-- -e : Utilizamos ese comando para utililzar una de esas variables y decirle a la imagen que queremos una password personalizada
+- **-e** : Utilizamos ese comando para utililzar una de esas variables y decirle a la imagen que queremos una password personalizada
 
-- -v : Comando que nos sirve para indicar que el contenido de una carpeta del contenedor este montada en una de la maquina
+- **-v** : Comando que nos sirve para indicar que el contenido de una carpeta del contenedor este montada en una de la maquina
 
-- p : Comando que sirve para enlazar los puertos del contenedor con los de la maquina real
+- **-p** : Comando que sirve para enlazar los puertos del contenedor con los de la maquina real
 
 - Y por ultimo donde pone mysql es la imagen que se utilizara para la creacion del contenedor.
