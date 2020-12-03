@@ -1,9 +1,17 @@
-# INSTALACIÓN DE DOCKER Y MYSQL
+---
+title: "INSTALACIÓN DE DOCKER Y MYSQL"
+author: [Pilar Ventura Fernández]
+subject: "Markdown"
+keywords: [Markdown, README]
+lang: "es"
+toc-own-page: "true"
+---
 
-## Docker
+
+# Docker
 En mi caso voy a instalar docker desde un OpenSuse, ya que para Linux no hay una versión Desktop lo instalaremos en consola.
 
-### PASOS A SEGUIR:
+## PASOS A SEGUIR:
 
 Usarmos zypper para descargar el repositorio:
 ```
@@ -21,13 +29,13 @@ Reiniciamos el docker
 ```
 systemctl restart docker
 ```
-### Para la comprobación:
+## Para la comprobación:
 
 Nos instalamos una imagen de ejemplo: 
 ```
 docker run --rm hello-world
 ```
-![](Imagenes/docker.png);
+![](Imagenes/docker.png)
 
 Y seguidamente limpiamos y eliminamos la imagen para no acumular
 ```
@@ -37,15 +45,15 @@ docker rmi -f IMAGE_ID
 
 Dentro de docker tendriamos estas imágenes: 
 
-![](Imagenes/images.png);
+![](Imagenes/images.png)
 
-## CREACIÓN DE UNA IMÁGEN MYSQL
+# CREACIÓN DE UNA IMÁGEN MYSQL
 
 Descargamos la última imágen de MySQL:
 ```
 docker image ls
 ```
-![](Imagenes/image_mysql.png);
+![](Imagenes/image_mysql.png)
 
 Creamos el contenedor de mysql:
 ```
@@ -69,9 +77,9 @@ Una vez iniciada mysql comprobamos que está funcionando
 ```
 docker stats
 ```
-![](Imagenes/stats.png);
+![](Imagenes/stats.png)
 
-## INSTALACIÓN MYSQL WORKBENCH
+# INSTALACIÓN MYSQL WORKBENCH
 
 En mi caso para la instalación al ser un OpenSuse hay que descargarse un archivo .ymp que te lo instala con Yast. 
 
@@ -103,3 +111,97 @@ This is the community build.</description>
 ```
 - Archivo usado para instalar MySQL Workbench
 
+> OJO!! El MySQL Workbench no funciona con MYSQL (OpenSuse por lo menos) por lo que he pasado a usar el MariaDB
+
+![](Imagenes/workbech.png)
+
+En ella las bases de datos:
+
+![](Imagenes/databases.png)
+
+- Creamos 2 nuevas bases de datos desde consola:
+
+![](Imagenes/mariadb.png)
+
+- Comprobamos desde el cliente Workbench:
+
+![](Imagenes/db-workbench.png)
+
+
+- Eliminamos una base de datos desde Workbench:
+
+![](Imagenes/drop.png)
+
+- Salimos de (en mi caso) MariaDB: exit
+
+Para visualizar los contenedores que están activos se usa el comando:
+```
+docker ps
+```
+Para parar un contenedor:
+```
+docker stop ID_CONTENEDOR
+```
+
+Para ver los contenedores tanto abiertos como los parados:
+```
+docker ps -a
+```
+
+Dentro del Workbench podemos ver las tablas pero no podemos acceder a ellas. Además de que al crear las bases de datos no contienen tablas todavía. 
+
+![](Imagenes/tabla.png)
+
+Comprobamos el estado de las carpetas en local
+
+![](Imagenes/.conf.png)
+
+Eliminamos el contenedor y comprobamos que en las carpetas en local que sigue estándo: 
+
+![](Imagenes/.conf2.png)
+  
+Comprobamos que al volver a meter el contenedor los datos no se han perdido:
+
+![](Imagenes/comprobacion.png)
+
+##------------------------------------------------------##
+
+# INSTALACIÓN PHPMYADMIN EN DOCKER
+
+Primero comando que usamos para esta instalación es: 
+```
+zypper in docker-compose
+```
+Guardamos archivo yml en una carpeta especifica para el compose que contendrá:
+
+```
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mariadb-latest
+        ports:
+            - 80:80
+        networks:
+            - default-net
+        depends_on: 
+            - mariadb-latest
+    mariadb-latest:
+        image: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - /home/pili/.conf:/var/lib/mysql
+        networks:
+            - default-net
+networks:
+    default-net:
+```
+Y ejecutamos
+```
+docker-compose up -d
+```
+Comporbamos: 
+
+![](Imagenes/phpmyadmin.png)

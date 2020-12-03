@@ -1,0 +1,22 @@
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mariadb-latest
+        ports:
+            - 80:80
+        networks:
+            - default-net
+        depends_on: 
+            - mariadb-latest
+    mariadb-latest:
+        image: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - /home/pili/.conf:/var/lib/mysql
+        networks:
+            - default-net
+networks:
+    default-net:
